@@ -1,0 +1,5 @@
+#workspace-compact .form-control,
+#workspace-compact .input-icon
+{
+    max-width: unset !important;
+}
