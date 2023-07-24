@@ -21,6 +21,9 @@
         $table->unsignedBigInteger('project');
         $table->foreign('project')->references('id')->on('projects');
 
+        $table->unsignedBigInteger('status');
+        $table->foreign('status')->references('id')->on('tasks_status');
+
         $table->timestamps();
       });
     }

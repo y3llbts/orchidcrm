@@ -15,11 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
         });
-
-        Schema::table('tasks', function (Blueprint $table) {
-          $table->unsignedBigInteger('status');
-          $table->foreign('status')->references('id')->on('tasks_status');
-        });
     }
 
     /**
