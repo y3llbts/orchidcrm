@@ -37,7 +37,12 @@
         Menu::make('Проекты')
           ->icon('bs.columns-gap')
           ->title('Навигация')
-          ->route('platform.projects.list')
+          ->route('platform.projects.list'),
+
+        Menu::make(__('Задачи'))
+          ->icon('bs.list-task')
+          ->route('platform.tasks.list')
+          ->permission('platform.systems.users')
           ->divider(),
 
         Menu::make(__('Пользователи'))

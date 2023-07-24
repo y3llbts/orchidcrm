@@ -1,14 +1,16 @@
 <?php
 
-  namespace App\Orchid\Screens\Project;
+namespace App\Orchid\Screens\Tasks;
 
-  use App\Orchid\Layouts\Task\TaskListLayout;
-  use Orchid\Screen\Actions\Link;
-  use Orchid\Screen\Screen;
-  use App\Models\Project;
+use App\Models\Task;
 
-  class ProjectListScreen extends Screen
-  {
+use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Link;
+
+use App\Orchid\Layouts\Task\TaskListLayout;
+
+class TasksListScreen extends Screen
+{
     /**
      * Fetch data to be displayed on the screen.
      *
@@ -16,9 +18,9 @@
      */
     public function query(): iterable
     {
-      return [
-        'project' => Project::paginate()
-      ];
+        return [
+            'tasks' => Task::paginate()
+        ];
     }
 
     /**
@@ -28,12 +30,12 @@
      */
     public function name(): ?string
     {
-      return 'Список проектов';
+        return 'Список задач';
     }
 
     public function description(): ?string
     {
-      return 'Все проекты, добавленные в систему.';
+        return 'Все задачи, созданные в системе.';
     }
 
     /**
@@ -43,11 +45,11 @@
      */
     public function commandBar(): iterable
     {
-      return [
-        Link::make('Создать проект')
-          ->icon('bs.plus-circle')
-          ->route('platform.projects.create')
-      ];
+        return [
+            Link::make('Создать организацию')
+                ->icon('bs.plus-circle')
+                ->route('platform.tasks.create')
+        ];
     }
 
     /**
@@ -57,8 +59,8 @@
      */
     public function layout(): iterable
     {
-      return [
-        TaskListLayout::class
-      ];
+        return [
+            TaskListLayout::class
+        ];
     }
-  }
+}
