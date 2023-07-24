@@ -18,8 +18,12 @@ use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
+
 use App\Orchid\Screens\Organization\OrganizationEditScreen;
 use App\Orchid\Screens\Organization\OrganizationListScreen;
+
+use App\Orchid\Screens\Project\ProjectListScreen;
+use App\Orchid\Screens\Project\ProjectEditScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,3 +122,21 @@ Route::screen('organizations', OrganizationListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Организации'), route('platform.organizations.list')));
+
+Route::screen('projects/{project}/edit', ProjectEditScreen::class)
+  ->name('platform.projects.edit')
+  ->breadcrumbs(fn (Trail $trail, $project) => $trail
+    ->parent('platform.projects.list')
+    ->push($project->name, route('platform.projects.edit', $project)));
+
+Route::screen('projects/create', ProjectEditScreen::class)
+  ->name('platform.projects.create')
+  ->breadcrumbs(fn (Trail $trail) => $trail
+    ->parent('platform.projects.list')
+    ->push(__('Создание проекта'), route('platform.projects.create')));
+
+Route::screen('projects', ProjectListScreen::class)
+  ->name('platform.projects.list')
+  ->breadcrumbs(fn (Trail $trail) => $trail
+    ->parent('platform.index')
+    ->push(__('Проекты'), route('platform.projects.list')));

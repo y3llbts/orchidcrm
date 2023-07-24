@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Orchid\Screens\Organization;
+  namespace App\Orchid\Screens\Organization;
 
-use App\Models\Organization;
-use App\Models\User;
+  use App\Models\Organization;
+  use App\Models\User;
 
-use Illuminate\Http\Request;
-use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Group;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Screen;
-use Orchid\Support\Facades\Layout;
-use Orchid\Support\Facades\Toast;
+  use Illuminate\Http\Request;
+  use Orchid\Screen\Actions\Button;
+  use Orchid\Screen\Fields\Group;
+  use Orchid\Screen\Fields\Input;
+  use Orchid\Screen\Fields\Relation;
+  use Orchid\Screen\Screen;
+  use Orchid\Support\Facades\Layout;
+  use Orchid\Support\Facades\Toast;
 
-class OrganizationEditScreen extends Screen
-{
+  class OrganizationEditScreen extends Screen
+  {
 
     /**
      * @var Organization
@@ -29,9 +29,9 @@ class OrganizationEditScreen extends Screen
      */
     public function query(Organization $organization): iterable
     {
-        return [
-            'organization' => $organization
-        ];
+      return [
+        'organization' => $organization
+      ];
     }
 
     /**
@@ -41,7 +41,7 @@ class OrganizationEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->organization->exists ? 'Редактирование организации' : 'Создание организации';
+      return $this->organization->exists ? 'Редактирование организации' : 'Создание организации';
     }
 
     /**
@@ -51,22 +51,22 @@ class OrganizationEditScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Button::make('Создать организацию')
-                ->icon('pencil')
-                ->method('createOrUpdate')
-                ->canSee(!$this->organization->exists),
+      return [
+        Button::make('Создать организацию')
+          ->icon('pencil')
+          ->method('createOrUpdate')
+          ->canSee(!$this->organization->exists),
 
-            Button::make('Сохранить изменения')
-                ->icon('pencil')
-                ->method('createOrUpdate')
-                ->canSee($this->organization->exists),
+        Button::make('Сохранить изменения')
+          ->icon('pencil')
+          ->method('createOrUpdate')
+          ->canSee($this->organization->exists),
 
-            Button::make('Удалить организацию')
-                ->icon('trash')
-                ->method('remove')
-                ->canSee($this->organization->exists),
-        ];
+        Button::make('Удалить организацию')
+          ->icon('trash')
+          ->method('remove')
+          ->canSee($this->organization->exists),
+      ];
     }
 
     /**
@@ -76,46 +76,46 @@ class OrganizationEditScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [
-            Layout::rows([
-                Group::make([
-                    Input::make('organization.name')
-                        ->title('Наименование')
-                        ->placeholder('Введите название организации...'),
+      return [
+        Layout::rows([
+          Group::make([
+            Input::make('organization.name')
+              ->title('Наименование')
+              ->placeholder('Введите название организации...'),
 
-                    Input::make('organization.tax_rate')
-                        ->title('Налоговая ставка')
-                        ->placeholder('Введите налоговую ставку...'),
-                ]),
-                Group::make([
-                    Input::make('organization.key')
-                        ->title('Символьный ключ')
-                        ->placeholder('Введите символьный ключ...')
-                        ->help('Буквенное обозначение из трех-четырех латинских букв'),
+            Input::make('organization.tax_rate')
+              ->title('Налоговая ставка')
+              ->placeholder('Введите налоговую ставку...'),
+          ]),
+          Group::make([
+            Input::make('organization.key')
+              ->title('Символьный ключ')
+              ->placeholder('Введите символьный ключ...')
+              ->help('Буквенное обозначение из трех-четырех латинских букв'),
 
-                    Relation::make('organization.user_admin')
-                        ->title('Ответственный организации')
-                        ->fromModel(User::class, 'id')
-                ])
-            ])
-        ];
+            Relation::make('organization.user_admin')
+              ->title('Ответственный организации')
+              ->fromModel(User::class, 'name')
+          ])
+        ])
+      ];
     }
 
     public function createOrUpdate(Organization $organization, Request $request)
     {
-        $organization->fill($request->get('organization'))->save();
+      $organization->fill($request->get('organization'))->save();
 
-        Toast::success(__('Операция успешно выполнена'));
+      Toast::success(__('Операция успешно выполнена'));
 
-        return redirect()->route('platform.organizations.list');
+      return redirect()->route('platform.organizations.list');
     }
 
     public function remove(Organization $organization)
     {
-        $organization->delete();
+      $organization->delete();
 
-        Toast::success(__('Организация успешно удалена'));
+      Toast::success(__('Организация успешно удалена'));
 
-        return redirect()->route('platform.organizations.list');
+      return redirect()->route('platform.organizations.list');
     }
-}
+  }

@@ -2,4 +2,5 @@
 #workspace-compact .input-icon
 {
     max-width: unset !important;
+    border-radius: var(--bs-border-radius)!important;
 }
